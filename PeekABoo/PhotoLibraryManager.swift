@@ -48,12 +48,6 @@ class PhotoLibraryManager: NSObject, ObservableObject {
             self.isPhotosLoaded = true
         }
     }
-//    override init() {
-//        super.init()
-////        Task {
-////            try await load()
-////        }
-//    }
     
     deinit {
         PHPhotoLibrary.shared().unregisterChangeObserver(self)
