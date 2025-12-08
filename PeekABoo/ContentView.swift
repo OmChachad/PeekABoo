@@ -11,7 +11,7 @@ import Photos
 extension View {
     /// Monitors for camera captures and calls the completion handler with the captured image
     /// - Parameter completionHandler: Closure that receives the captured Image
-    func onCapture(completionHandler: @escaping (Image) -> Void) -> some View {
+    func onCapture(completionHandler: @escaping (UIImage) -> Void) -> some View {
         self.modifier(CameraCaptureModifier(completionHandler: completionHandler))
     }
 }
@@ -19,7 +19,7 @@ extension View {
 // MARK: - View Modifier
 
 private struct CameraCaptureModifier: ViewModifier {
-    let completionHandler: (Image) -> Void
+    let completionHandler: (UIImage) -> Void
     @StateObject private var photoCollection = PhotoLibraryManager()
     
     func body(content: Content) -> some View {
@@ -41,6 +41,10 @@ private struct CameraCaptureModifier: ViewModifier {
 
 struct ContentView: View {
     @State private var capturedImage: Image?
+    @State private var capturedUIImage: UIImage?
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
+    @Environment(\.pushWindow) private var pushWindow
     
     var body: some View {
         VStack {
@@ -51,10 +55,22 @@ struct ContentView: View {
             } else {
                 Text("Waiting for capture...")
             }
+            
+//            Button("Ask AI") {
+//                if let imageData = capturedUIImage?.pngData() {
+//                    openWindow(id: "AskAI", value: imageData)
+//                }
+//            }
         }
-        .padding()
+//        .frame(width: 10, height: 10)
         .onCapture { image in
-            capturedImage = image
+            capturedImage = Image(uiImage: image)
+            capturedUIImage = image
+            if let imageData = image.pngData() {
+//                dismissWindow(id: "main")
+                openWindow(id: "AskAI", value: imageData)
+//                pushWindow(id: "AskAI", value: imageData)
+            }
         }
     }
 }

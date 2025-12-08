@@ -39,20 +39,20 @@ struct PhotoAsset: Identifiable {
     }
     
     @discardableResult
-    func requestImage(targetSize: CGSize, completion: @escaping ((image: Image?, isLowerQuality: Bool)?) -> Void) -> PHImageRequestID? {
+    func requestImage(targetSize: CGSize, completion: @escaping ((image: UIImage?, isLowerQuality: Bool)?) -> Void) -> PHImageRequestID? {
         guard let phAsset = self.phAsset else {
             completion(nil)
             return nil
         }
         
         let imageManager = PHImageManager()
-        var imageContentMode = PHImageContentMode.aspectFit
-        var requestOptions: PHImageRequestOptions = {
+        let imageContentMode = PHImageContentMode.aspectFit
+        var requestOptions: PHImageRequestOptions {
             let options = PHImageRequestOptions()
-            options.deliveryMode = .opportunistic
+            options.deliveryMode = .highQualityFormat
             #warning("Try out different combinations.")
             return options
-        }()
+        }
         
         let requestID = imageManager.requestImage(for: phAsset, targetSize: targetSize, contentMode: imageContentMode, options: requestOptions) { image, info in
             if let error = info?[PHImageErrorKey] as? Error {
@@ -63,7 +63,7 @@ struct PhotoAsset: Identifiable {
                 completion(nil)
             } else if let image = image {
                 let isLowerQualityImage = (info?[PHImageResultIsDegradedKey] as? NSNumber)?.boolValue ?? false
-                let result = (image: Image(uiImage: image), isLowerQuality: isLowerQualityImage)
+                let result = (image: image, isLowerQuality: isLowerQualityImage)
                 completion(result)
             } else {
                 completion(nil)
