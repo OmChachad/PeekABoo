@@ -72,20 +72,6 @@ struct PhotoAsset: Identifiable {
         return requestID
     }
     
-//    func setIsFavorite(_ isFavorite: Bool) async {
-//        guard let phAsset = phAsset else { return }
-//        Task {
-//            do {
-//                try await PHPhotoLibrary.shared().performChanges {
-//                    let request = PHAssetChangeRequest(for: phAsset)
-//                    request.isFavorite = isFavorite
-//                }
-//            } catch (let error) {
-////                LogManager.shared.addLog("Failed to change isFavorite: \(error.localizedDescription)", type: .error)
-//            }
-//        }
-//    }
-    
     func delete() async {
         guard let phAsset = phAsset else { return }
         do {
