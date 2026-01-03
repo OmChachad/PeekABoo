@@ -10,8 +10,18 @@ import SwiftUI
 @main
 struct PeekABooApp: App {
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "main") {
             ContentView()
         }
+        
+        WindowGroup("Ask AI", id: "AskAI", for: Data.self) { $imageData in
+            if let data = imageData, let uiImage = UIImage(data: data) {
+                AskAIWindow(imageData: uiImage)
+                    .allowsWindowActivationEvents(true)
+            } else {
+                Text("Could not load image.")
+            }
+        }
+        .windowStyle(.plain)
     }
 }
