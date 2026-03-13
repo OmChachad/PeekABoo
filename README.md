@@ -14,6 +14,12 @@
   <img width="600" src="/Resources/examples/example1.gif" alt="Peekaboo Demo">
 </div>
 
+
+ 
+
+
+  
+
 ## About
 
 The world's first passthrough API for Apple Vision Pro that anyone can use.
@@ -77,7 +83,8 @@ The modifier calls your handler whenever a new screenshot is detected in the use
 On most platforms, reading camera frames is trivial and already solved by standard camera APIs, so this pattern would not make much sense there.
 
 On Apple Vision Pro, however, screenshots are uniquely valuable because they include the user's surrounding real-world context in the captured image.
-PeekABoo taps into that unique behavior by observing new screenshot assets (with explicit Photos permission), then delivering each new capture to your app as a `UIImage`.
+PeekABoo taps into that unique behavior by observing new screenshot assets, then delivering each new capture to your app as a `UIImage`. 
+A capture can only be initiated when the Digital Crown and Capture button are clicked simulataneously, ensuring that the user is always in control of when their environment is shared.
 
 In practice:
 
