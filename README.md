@@ -117,7 +117,7 @@ Read more about the Peekaboo Proposal here:
 
 ## Examples
 
-PeekABoo can be used to build real-world-aware experiences such as visual inference apps, assistive overlays, and context-triggered workflows.
+PeekABoo can be used to build real-world-aware experiences such as visual inference apps, assistive overlays, and context-triggered workflows. Great examples include a calorie tracking app, or one that scans QR codes.
 
 ## Contributing
 
@@ -126,5 +126,9 @@ Contributions welcome. Open an issue or submit a pull request.
 Released under the [MIT License](LICENSE).
 
 ## Contact
+
+Twitter: [@TheOriginaliTE](https://twitter.com/TheOriginaliTE)
+Linkedin: [Om Chachad](https://www.linkedin.com/in/omchachad/)
+Website: [iTech Everything](https://itecheverything.com)
 
 Built with love by Om.
