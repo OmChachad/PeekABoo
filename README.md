@@ -74,6 +74,31 @@ struct ContentView: View {
 
 The modifier calls your handler whenever a new screenshot is detected in the user's screenshot album.
 
+### Permissions
+
+You must add the `NSPhotoLibraryUsageDescription` key to your `Info.plist` file explaining why you need access to the photo library.
+
+### Manual Authorization
+
+By default, the permission prompt will appear when the view with `.onCapture` appears. If you prefer to request access at a specific time (e.g., during an onboarding flow), you can use the static methods provided by `PeekABoo`:
+
+```swift
+import PeekABoo
+
+// Check if access is already granted (specifically "Full Access")
+if !PeekABoo.isAccessGranted {
+    // Request access manually
+    let granted = await PeekABoo.requestAccess()
+    if granted {
+        print("Access granted!")
+    } else {
+        print("Access denied or limited.")
+    }
+}
+```
+
+> **Important:** PeekABoo requires **Full Library Access**. If the user grants "Limited Access", `isAccessGranted` will return `false`, and the screenshot observation will not work as expected because it cannot continuously monitor for new screenshots in the background without full access.
+
 **visionOS 1.0+** · Uses SwiftUI + Photos APIs
 
 ---
