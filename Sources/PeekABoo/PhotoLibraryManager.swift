@@ -6,8 +6,10 @@ final class PhotoLibraryManager: NSObject, ObservableObject {
     @Published var latestScreenshot: PHAsset?
 
     private var fetchResult: PHFetchResult<PHAsset>?
+    private var monitoringStartDate: Date?
 
     func start() async {
+        monitoringStartDate = Date()
         guard await Self.requestAccess() else { return }
 
         PHPhotoLibrary.shared().register(self)
@@ -23,7 +25,6 @@ final class PhotoLibraryManager: NSObject, ObservableObject {
 
         let result = PHAsset.fetchAssets(in: album, options: options)
         fetchResult = result
-        latestScreenshot = result.firstObject
     }
 
     deinit {
@@ -50,7 +51,7 @@ final class PhotoLibraryManager: NSObject, ObservableObject {
 
     // MARK: - Authorization
 
-    private static func requestAccess() async -> Bool {
+    static func requestAccess() async -> Bool {
         let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         if status == .authorized { return true }
         if status == .notDetermined {
@@ -62,14 +63,21 @@ final class PhotoLibraryManager: NSObject, ObservableObject {
 
 // MARK: - PHPhotoLibraryChangeObserver
 
-extension PhotoLibraryManager: @preconcurrency PHPhotoLibraryChangeObserver {
+extension PhotoLibraryManager: PHPhotoLibraryChangeObserver {
     nonisolated func photoLibraryDidChange(_ changeInstance: PHChange) {
         Task { @MainActor in
             guard let current = fetchResult,
                   let changes = changeInstance.changeDetails(for: current) else { return }
             let updated = changes.fetchResultAfterChanges
             self.fetchResult = updated
-            self.latestScreenshot = updated.firstObject
+
+            // Only update if the new screenshot was taken after monitoring started
+            if let asset = updated.firstObject,
+               let startDate = self.monitoringStartDate,
+               let creationDate = asset.creationDate,
+               creationDate > startDate {
+                self.latestScreenshot = asset
+            }
         }
     }
 }
