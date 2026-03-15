@@ -128,10 +128,10 @@ PeekABoo.captureGestureIcon
 
 ## How it works
 
-On most platforms, reading camera frames is trivial and already solved by standard camera APIs, so this pattern would not make much sense there.
+On most platforms, reading camera frames is trivial thanks to standard camera APIs. Additionally, on other platforms, screenshots taken while an app is open typically only capture the app's own interface. This renders screenshot observation useless for data input, as the app would merely receive an image of itself.
 
 On Apple Vision Pro, however, screenshots are uniquely valuable because they include the user's surrounding real-world context in the captured image.
-PeekABoo taps into that unique behavior by observing new screenshot assets, then delivering each new capture to your app as a `UIImage`. 
+PeekABoo taps into that unique behavior by observing new screenshot assets, then delivering each new capture to your app as a `UIImage`. This essentially allows for a foax passthrough effect on the Vision Pro.
 A capture can only be initiated when the Digital Crown and Capture button are clicked simulataneously, ensuring that the user is always in control of when their environment is shared.
 
 In practice:
