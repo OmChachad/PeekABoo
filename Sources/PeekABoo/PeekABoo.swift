@@ -7,7 +7,7 @@ public enum PeekABoo {
     /// Requests full access to the photo library.
     ///
     /// The user will be prompted to grant access if they haven't already.
-    /// Returns `true` if full access is granted, `false` if access is limited or denied.
+    /// Returns `true` if full access is granted, `false` if access is limited or deniedccess is limited or denied.
     @MainActor
     public static func requestAccess() async -> Bool {
         await PhotoLibraryManager.requestAccess()

@@ -16,7 +16,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "PeekABoo"
+            name: "PeekABoo",
+            resources: [
+                .process("Resources")
+            ]
         ),
     ]
 )

@@ -99,6 +99,29 @@ if !PeekABoo.isAccessGranted {
 
 > **Important:** PeekABoo requires **Full Library Access**. If the user grants "Limited Access", `isAccessGranted` will return `false`, and the screenshot observation will not work as expected because it cannot continuously monitor for new screenshots in the background without full access.
 
+### User Instructions
+
+PeekABoo includes a pre-built SwiftUI view that explains to users how to take a screenshot (press Top Button + Digital Crown). This is useful for onboarding or help screens.
+
+```swift
+import PeekABoo
+
+// concise instructions
+PeekABoo.CaptureInstructions()
+
+// or with custom text below
+PeekABoo.CaptureInstructions(description: "Capture your surroundings to analyze them.")
+```
+
+If you want to build a custom UI, you can access the instruction image directly:
+
+```swift
+// Returns a SwiftUI Image
+PeekABoo.captureGestureIcon
+    .resizable()
+    .scaledToFit()
+```
+
 **visionOS 1.0+** · Uses SwiftUI + Photos APIs
 
 ---
