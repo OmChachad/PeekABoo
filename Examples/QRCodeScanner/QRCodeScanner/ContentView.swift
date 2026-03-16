@@ -22,11 +22,15 @@ struct ContentView: View {
             Text("QR Code Scanner")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
-
+            
+            Spacer()
+            
             PeekABoo.CaptureInstructions(
                 description: "Point the headset at a QR code and then capture to read its contents."
             )
             .frame(maxWidth: 420)
+            
+            Spacer()
 
             VStack(spacing: 12) {
                 Text(detectionState.title)
