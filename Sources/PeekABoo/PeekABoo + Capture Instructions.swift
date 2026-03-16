@@ -39,8 +39,8 @@ public extension PeekABoo {
                     .frame(maxHeight: 300)
                     .accessibilityHidden(true)
                 
-                Text(verbatim: "Press and release the top button and the Digital Crown at the same time.")
-                    .font(.title3)
+                Text(verbatim: "Press and release the Capture Button and the Digital Crown at the same time.")
+                    .font(.title2)
                     .bold()
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.secondary)
