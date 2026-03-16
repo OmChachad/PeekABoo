@@ -6,7 +6,12 @@ public extension PeekABoo {
     ///
     /// This image shows the Vision Pro headset with arrows pointing to the Digital Crown and Top Button.
     static var captureGestureIcon: Image {
-        Image("CaptureGesture", bundle: .module)
+        if let path = Bundle.module.path(forResource: "CaptureGesture", ofType: "png"),
+           let image = UIImage(contentsOfFile: path) {
+            return Image(uiImage: image)
+        }
+        
+        return Image(systemName: "visionpro")
     }
     
     /// A view that displays the instructions for taking a screenshot on Vision Pro.
@@ -34,8 +39,8 @@ public extension PeekABoo {
                     .frame(maxHeight: 300)
                     .accessibilityHidden(true)
                 
-                Text(verbatim: "Press and release the top button and the Digital Crown at the same time.")
-                    .font(.title3)
+                Text(verbatim: "Press and release the Capture Button and the Digital Crown at the same time.")
+                    .font(.title2)
                     .bold()
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.secondary)

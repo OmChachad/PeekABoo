@@ -13,40 +13,24 @@ import Vision
 struct ContentView: View {
     @Environment(\.openURL) private var openURL
 
-    @State private var latestCapture: UIImage?
     @State private var scannedPayload = "Take a screenshot of a QR code to scan it."
     @State private var detectionState = DetectionState.idle
+    @State private var sheetResult: ScannedResult?
 
     var body: some View {
         VStack(spacing: 24) {
             Text("QR Code Scanner")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
-
+            
+            Spacer()
+            
             PeekABoo.CaptureInstructions(
-                description: "Point the headset at a QR code, then press the top button and Digital Crown together."
+                description: "Point the headset at a QR code and then capture to read its contents."
             )
             .frame(maxWidth: 420)
-
-            ZStack {
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
-                    .fill(.regularMaterial)
-
-                if let latestCapture {
-                    Image(uiImage: latestCapture)
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-                        .padding(18)
-                } else {
-                    ContentUnavailableView(
-                        "No Screenshot Yet",
-                        systemImage: "qrcode.viewfinder",
-                        description: Text("Your latest PeekABoo capture will appear here.")
-                    )
-                }
-            }
-            .frame(maxWidth: 680, minHeight: 360, maxHeight: 420)
+            
+            Spacer()
 
             VStack(spacing: 12) {
                 Text(detectionState.title)
@@ -64,10 +48,13 @@ struct ContentView: View {
             .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
         }
         .padding(32)
+        .sheet(item: $sheetResult) { result in
+            ResultSheet(result: result)
+        }
         .onCapture { image in
-            latestCapture = image
             detectionState = .scanning
             scannedPayload = "Analyzing latest screenshot..."
+            sheetResult = nil
 
             Task {
                 let result = await QRCodeDetector.scan(image: image)
@@ -80,6 +67,9 @@ struct ContentView: View {
                     if let url = URLParser.url(from: payload) {
                         scannedPayload = "Opening \(url.absoluteString)"
                         openURL(url)
+                    } else {
+                        scannedPayload = "QR code detected."
+                        sheetResult = ScannedResult(payload: payload)
                     }
                 case .failure(.notFound):
                     detectionState = .notFound
@@ -93,6 +83,46 @@ struct ContentView: View {
                 }
             }
         }
+    }
+}
+
+private struct ScannedResult: Identifiable {
+    let id = UUID()
+    let payload: String
+}
+
+private struct ResultSheet: View {
+    let result: ScannedResult
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "qrcode")
+                .font(.system(size: 48))
+                .foregroundStyle(.green)
+
+            Text("QR Code Result")
+                .font(.title2)
+                .fontWeight(.semibold)
+
+            ScrollView {
+                Text(result.payload)
+                    .font(.title3)
+                    .multilineTextAlignment(.center)
+                    .textSelection(.enabled)
+                    .frame(maxWidth: .infinity)
+            }
+            .frame(maxHeight: 220)
+            .padding()
+            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+
+            Button("Done") {
+                dismiss()
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .padding(32)
+        .frame(minWidth: 420, maxWidth: 520)
     }
 }
 
