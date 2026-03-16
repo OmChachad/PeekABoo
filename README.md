@@ -96,7 +96,7 @@ if !PeekABoo.isAccessGranted {
 
 ### User Instructions
 
-PeekABoo includes a pre-built SwiftUI view that explains to users how to take a screenshot (press Top Button + Digital Crown). This is useful for onboarding or help screens.
+PeekABoo includes a pre-built SwiftUI view that explains to users how to take a screenshot (press Capture Button + Digital Crown). This is useful for onboarding or help screens.
 
 ```swift
 import PeekABoo
