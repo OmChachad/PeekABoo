@@ -13,11 +13,6 @@
 <div align="center">
   <img width="600" src="/Resources/examples/example1.gif" alt="Peekaboo Demo">
 </div>
-
-
- 
-
-
   
 
 ## About
