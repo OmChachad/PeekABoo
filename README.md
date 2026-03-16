@@ -155,13 +155,13 @@ Documentation and API notes are in the source at:
 - It does not currently allow access to depth information on its own, but can be used in conjunction with Apple's depth mapping APIs to create a full-color map of your surroundings.
 - Images will in fact populate the user's camera roll once they are taken. This is an unfortunate limitation since Apple does not allow developers to silently delete items from the user's photo library.
 
-## Proposal
+## Proposal for 
 
 Peekaboo is more than just an API for developers. If you're from Apple, Peekaboo is a proposal for a privacy-preserving version of a passthrough capability. One that can be implemented to allow developers to create never-before-possible apps, allowing the visionOS platform to flourish with apps that build upon the user's immediate context.
 
 Read more about the Peekaboo Proposal here:
 
-- Proposal link coming soon
+- [Proposal for Privacy-First Passthrough on visionOS](Proposal.md)
 
 ## Examples
 
