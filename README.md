@@ -27,7 +27,7 @@ All while keeping the user in full control of what is shared - it's built with p
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/OmChachad/PeekABoo", from: "4.0.0")
+    .package(url: "https://github.com/OmChachad/PeekABoo", from: "1.0.0")
 ]
 ```
 
