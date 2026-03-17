@@ -1,6 +1,6 @@
 <div align="center">
-  <img width="200" height="200" src="/Resources/Icon.png" alt="Peekaboo Logo">
-  <h1><b>Peekaboo</b></h1>
+  <img width="200" height="200" src="/Resources/Icon.png" alt="PeekABoo Logo">
+  <h1><b>PeekABoo</b></h1>
   <p>
     The first and only consumer-facing "passthrough" API for Apple Vision Pro, crafted with privacy in mind.
   </p>
